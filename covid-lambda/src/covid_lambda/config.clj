@@ -8,15 +8,15 @@
 
 (declare params)
 
-(def params (aws/client {:api :ssm}))
+;; (def params (aws/client {:api :ssm}))
 
-(defn get-ssm-params [env names]
-  (-> {:op :GetParameters :request {:Names names
-                                    :WithDecryption true}}
-      (->> (aws/invoke params))
-      :Parameters
-      (->> (mapv #(-> % :Value clojure.edn/read-string)))
-      (->> (reduce merge {:env env}))))
+;; (defn get-ssm-params [env names]
+;;   (-> {:op :GetParameters :request {:Names names
+;;                                     :WithDecryption true}}
+;;       (->> (aws/invoke params))
+;;       :Parameters
+;;       (->> (mapv #(-> % :Value clojure.edn/read-string)))
+;;       (->> (reduce merge {:env env}))))
 
 (def my-config (atom nil))
 

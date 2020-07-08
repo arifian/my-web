@@ -35,7 +35,3 @@
   (let [init-config   (when (= nil @cfg/my-config) (cfg/get-config))
         _ (println (->cljmap s))]
     (str "helo")))
-
-
-;; _ (println (->cljmap s))
-;; __ (println "Hello World!")

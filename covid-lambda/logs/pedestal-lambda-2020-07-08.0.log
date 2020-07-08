@@ -1,1 +1,5 @@
 12:56:35.687 [nRepl-session-e8c5f236-b184-4c60-bded-96cb88bc35a9] INFO  org.eclipse.jetty.util.log  - Logging initialized @38463ms
+14:02:11.116 [nRepl-session-14f5465b-4fbe-4d63-a8f3-9414df3c06de] INFO  org.eclipse.jetty.util.log  - Logging initialized @9150ms
+14:03:37.550 [nRepl-session-2ce5582a-21f3-475f-b315-ccd7ea9be11f] INFO  org.eclipse.jetty.util.log  - Logging initialized @24821ms
+14:46:34.767 [nRepl-session-e5c74f68-3722-400e-a293-7282e90abf87] INFO  org.eclipse.jetty.util.log  - Logging initialized @11247ms
+14:46:57.364 [nRepl-session-bf3556e8-7c4e-472a-964a-42b3ba66bc31] INFO  org.eclipse.jetty.util.log  - Logging initialized @12155ms
