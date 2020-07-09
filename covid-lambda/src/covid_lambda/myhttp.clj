@@ -61,8 +61,6 @@
       (mathdroid-normalize data)
       nil)))
 
-
-
 (comment
   
   (json/write-str (get-live-data))
@@ -70,28 +68,11 @@
   (get-data "https://covid19.mathdro.id/api/countries/indonesia")
   (get-data "https://api.kawalcorona.com/indonesia/provinsi")
   
-  {(-> "https://api.kawalcorona.com/indonesia/provinsi"
-       (->> http/get)
-       (select-keys [:status :body]))
-
-   {:status 200,
-    :body
-    [{"attributes"
-      {"FID"        15,
-       "Kode_Provi" 35,
-       "Provinsi"   "Jawa Timur",
-       "Kasus_Posi" 14321,
-       "Kasus_Semb" 4996,
-       "Kasus_Meni" 1053}}
-     {"attributes"
-      {"FID"        11,
-       "Kode_Provi" 31,
-       "Provinsi"   "DKI Jakarta",
-       "Kasus_Posi" 12667,
-       "Kasus_Semb" 8036,
-       "Kasus_Meni" 649}}]}}
-  
   "time-series"
+  (spit "logs/time-series-sample.edn"
+        (:body (http-normalized-data "https://api.covid19api.com/total/dayone/country/indonesia")))
+  (def a (clojure.edn/read-string (slurp "logs/time-series-sample.edn")))
+
   (-> "https://api.covid19api.com/country/indonesia/status/confirmed"
       (->> http/get)
       (select-keys [:status :body]))

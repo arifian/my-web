@@ -44,20 +44,40 @@
                      (take 13)
                      (apply str))]
     (case opt
-      "run-task-now-data" (if-let [data (mh/get-live-data)]
-                            (do (try
-                                  (s3/copy-into-bucket "indonesia/live-archive"
-                                                       (str "now-" now-utc ".json")
-                                                       (get (s3/get-from-bucket "indonesia" "now.json") :Body))
-                                  (catch NoSuchMethodError e nil))
-                                (str (s3/put-into-bucket "indonesia"
-                                                         "now.json"
-                                                         (json/write-str data))))
-                            (str nil))
+      "run-task-now-data"          (if-let [data (mh/get-live-data)]
+                                     (do (s3/copy-into-bucket "indonesia/live-archive"
+                                                              (str "now-" now-utc ".json")
+                                                              (get (s3/get-from-bucket "indonesia" "now.json") :Body))
+                                         (str (s3/put-into-bucket "indonesia"
+                                                                  "now.json"
+                                                                  (json/write-str data))))
+                                     (str nil))
+      "run-task-now-data-province" (if-let [data (-> "https://covid19.mathdro.id/api/countries/indonesia"
+                                                     mh/get-data
+                                                     :body)]
+                                     (do (s3/copy-into-bucket "indonesia/live-province-archive"
+                                                              (str "now-province-" now-utc ".json")
+                                                              (get (s3/get-from-bucket "indonesia" "now-province.json") :Body))
+                                         (str (s3/put-into-bucket "indonesia"
+                                                                  "now-province.json"
+                                                                  data)))
+                                     (str nil))
+      "run-task-time-series"       (if-let [data (-> "https://api.covid19api.com/total/dayone/country/indonesia"
+                                                     mh/get-data
+                                                     :body)]
+                                     (do (s3/copy-into-bucket "indonesia/time-series-archive"
+                                                              (str "time-series-" now-utc ".json")
+                                                              (get (s3/get-from-bucket "indonesia" "time-series.json") :Body))
+                                         (str (s3/put-into-bucket "indonesia"
+                                                                  "time-series.json"
+                                                                  data)))
+                                     (str nil))
       "task-not-found")))
 
 (comment
   (-handler {"opt" "run-task-now-data"})
-  (-handler {"opt" "random"})
+  (-handler {"opt" "run-task-now-data-province"})
+  (-handler {"opt" "run-task-time-series"})
+  (-handler {"opt" "ipsum"})
   
-  (take 10 (str (t/now))))
+  )
