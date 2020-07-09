@@ -2,7 +2,8 @@
   (:require [covid-lambda.myhttp :as mh]
             [covid-lambda.s3 :as s3]
             [clojure.data.json :as json]
-            [clojure.edn])
+            [clojure.edn]
+            [clj-time.core :as t])
   (:gen-class
    :methods [^:static [handler [java.util.Map] String]]))
 
@@ -35,12 +36,28 @@
 ;; (java.util.Time.)
 
 (defn -handler [s]
-  (let [input (->cljmap s)
-        _     (println input)
-        opt   (:opt input)]
+  (let [input   (->cljmap s)
+        _       (println input)
+        opt     (:opt input)
+        now-utc (->> (t/now)
+                     str
+                     (take 13)
+                     (apply str))]
     (case opt
-      "run-task-now-data" (str (s3/put-into-bucket "indonesia" "now.json" (json/write-str (mh/get-daily-data))))
+      "run-task-now-data" (if-let [data (mh/get-live-data)]
+                            (do (try
+                                  (s3/copy-into-bucket "indonesia/live-archive"
+                                                       (str "now-" now-utc ".json")
+                                                       (get (s3/get-from-bucket "indonesia" "now.json") :Body))
+                                  (catch NoSuchMethodError e nil))
+                                (str (s3/put-into-bucket "indonesia"
+                                                         "now.json"
+                                                         (json/write-str data))))
+                            (str nil))
       "task-not-found")))
 
-#_(-handler {"opt" "run-task-now-data"})
-#_(-handler {"opt" "random"})
+(comment
+  (-handler {"opt" "run-task-now-data"})
+  (-handler {"opt" "random"})
+  
+  (take 10 (str (t/now))))

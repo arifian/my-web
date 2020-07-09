@@ -4,15 +4,14 @@
             [clojure.edn :as edn]
             [clojure.set :as cset]
             ;; [java-time :as jtime]
-            [clj-time.core :as t]
-            ))
-
-
+            [clj-time.core :as t]))
 
 (defn get-data [my-url]
-  (-> my-url
-      (->> http/get)
-      (select-keys [:status :body])))
+  (try
+    (-> my-url
+        (->> http/get)
+        (select-keys [:status :body]))
+    (catch Exception e nil)))
 
 (defn http-normalized-data [my-url]
   (let [data       (get-data my-url)
@@ -51,7 +50,7 @@
       (update-in [:body] #(assoc % "treated" nil))
       (assoc "lastUpdate" (system-now))))
 
-(defn get-daily-data []
+(defn get-live-data []
   (if-let [data (http-normalized-data "https://api.kawalcorona.com/indonesia")
            ;; nil
            ]
@@ -66,8 +65,8 @@
 
 (comment
   
-  (json/write-str (get-daily-data))
-  (get-data "https://api.kawalcorona.com/indonesia")
+  (json/write-str (get-live-data))
+  (get-data "https://api.kawalcorona.com/indonesiaa")
   (get-data "https://covid19.mathdro.id/api/countries/indonesia")
   (get-data "https://api.kawalcorona.com/indonesia/provinsi")
   
