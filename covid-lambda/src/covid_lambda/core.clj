@@ -1,7 +1,8 @@
 (ns covid-lambda.core
   (:require [covid-lambda.myhttp :as mh]
             [covid-lambda.s3 :as s3]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            [clojure.edn])
   (:gen-class
    :methods [^:static [handler [java.util.Map] String]]))
 
@@ -34,5 +35,12 @@
 ;; (java.util.Time.)
 
 (defn -handler [s]
-  (let [_ (println (->cljmap s))]
-    (str (s3/put-into-bucket "indonesia" "now.json" (json/write-str (mh/get-daily-data))))))
+  (let [input (->cljmap s)
+        _     (println input)
+        opt   (:opt input)]
+    (case opt
+      "run-task-now-data" (str (s3/put-into-bucket "indonesia" "now.json" (json/write-str (mh/get-daily-data))))
+      "task-not-found")))
+
+#_(-handler {"opt" "run-task-now-data"})
+#_(-handler {"opt" "random"})
