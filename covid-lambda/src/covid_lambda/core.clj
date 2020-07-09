@@ -1,11 +1,12 @@
 (ns covid-lambda.core
   (:require [covid-lambda.myhttp :as mh]
-            [covid-lambda.s3 :as s3])
+            [covid-lambda.s3 :as s3]
+            [clojure.data.json :as json])
   (:gen-class
    :methods [^:static [handler [java.util.Map] String]]))
 
-(set! *print-level* false)
-(set! *print-length* false)
+;; (set! *print-level* false)
+;; (set! *print-length* false)
 
 ;; to parse json params from invoke
 
@@ -33,5 +34,5 @@
 ;; (java.util.Time.)
 
 (defn -handler [s]
-  (let [_ (println "input :" (->cljmap s))]
-    (s3/put-into-bucket "indonesia" "test.json" "hello there!")))
+  (let [_ (println (->cljmap s))]
+    (str (s3/put-into-bucket "indonesia" "now.json" (json/write-str (mh/get-daily-data))))))
