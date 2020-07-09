@@ -1,8 +1,6 @@
 (ns covid-lambda.core
   (:require [covid-lambda.myhttp :as mh]
-            [covid-lambda.s3 :as s3]
-            ;; [java-time :as jtime]
-            )
+            [covid-lambda.s3 :as s3])
   (:gen-class
    :methods [^:static [handler [java.util.Map] String]]))
 
@@ -35,5 +33,5 @@
 ;; (java.util.Time.)
 
 (defn -handler [s]
-  (let [_ (println (->cljmap s))]
-    (str "helo")))
+  (let [_ (println "input :" (->cljmap s))]
+    (s3/put-into-bucket "indonesia" "test.json" "hello there!")))

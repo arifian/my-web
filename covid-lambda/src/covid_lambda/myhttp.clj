@@ -52,8 +52,8 @@
       (assoc "lastUpdate" (system-now))))
 
 (defn get-daily-data []
-  (if-let [data ;; (http-normalized-data "https://api.kawalcorona.com/indonesia")
-           nil
+  (if-let [data (http-normalized-data "https://api.kawalcorona.com/indonesia")
+           ;; nil
            ]
     (kkd-normalize data)
     (if-let [data  (http-normalized-data "https://covid19.mathdro.id/api/countries/indonesia")
@@ -67,41 +67,9 @@
 (comment
   
   (json/write-str (get-daily-data))
-  
-  (get-normalized-data "https://api.kawalcorona.com/indonesia")
-  (get-normalized-data "https://covid19.mathdro.id/api/countries/indonesia")
-  (get-normalized-data "https://api.kawalcorona.com/indonesia/provinsi")
-  
-  "daily"
-  {(-> "https://api.kawalcorona.com/indonesia"
-       (->> http/get)
-       (select-keys [:status :body]))
-   
-   {:status 200,
-    :body   [{"name"      "Indonesia",
-              "positif"   "68,079",
-              "sembuh"    "31,585",
-              "meninggal" "3,359",
-              "dirawat"   "33,135"}]}}
-  
-  {(-> "https://covid19.mathdro.id/api/countries/indonesia"
-       (->> http/get)
-       (select-keys [:status :body]))
-   {:status 200,
-    :body
-    {"confirmed"
-     {"value" 68079,
-      "detail"
-      "https://covid19.mathdro.id/api/countries/indonesia/confirmed"},
-     "recovered"
-     {"value" 31585,
-      "detail"
-      "https://covid19.mathdro.id/api/countries/indonesia/recovered"},
-     "deaths"
-     {"value" 3359,
-      "detail"
-      "https://covid19.mathdro.id/api/countries/indonesia/deaths"},
-     "lastUpdate" "2020-07-09T05:33:56.000Z"}}}
+  (get-data "https://api.kawalcorona.com/indonesia")
+  (get-data "https://covid19.mathdro.id/api/countries/indonesia")
+  (get-data "https://api.kawalcorona.com/indonesia/provinsi")
   
   {(-> "https://api.kawalcorona.com/indonesia/provinsi"
        (->> http/get)
