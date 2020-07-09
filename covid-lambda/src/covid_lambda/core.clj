@@ -1,10 +1,13 @@
 (ns covid-lambda.core
-    (:require [covid-lambda.config :as cfg]
-              [covid-lambda.clients :as clients]
-              [covid-lambda.s3 :as s3]
-              [java-time :as jtime])
-    (:gen-class
-     :methods [^:static [handler [java.util.Map] String]]))
+  (:require [covid-lambda.myhttp :as mh]
+            [covid-lambda.s3 :as s3]
+            ;; [java-time :as jtime]
+            )
+  (:gen-class
+   :methods [^:static [handler [java.util.Map] String]]))
+
+(set! *print-level* false)
+(set! *print-length* false)
 
 ;; to parse json params from invoke
 
@@ -32,6 +35,5 @@
 ;; (java.util.Time.)
 
 (defn -handler [s]
-  (let [init-config   (when (= nil @cfg/my-config) (cfg/get-config))
-        _ (println (->cljmap s))]
+  (let [_ (println (->cljmap s))]
     (str "helo")))

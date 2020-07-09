@@ -3,7 +3,8 @@
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/data.json "0.2.6"]
-                 [clojure.java-time "0.3.2"]
+                 ;; [clojure.java-time "0.3.2"]
+                 [clj-time "0.15.2"]
                  [clj-http "3.10.1"]
                  [com.cognitect.aws/api "0.8.301"]
                  [com.cognitect.aws/s3 "714.2.430.0"]

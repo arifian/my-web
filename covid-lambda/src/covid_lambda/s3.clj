@@ -1,22 +1,15 @@
 (ns covid-lambda.s3
-    (:require [cognitect.aws.client.api :as aws]
-              [covid-lambda.config :as cfg]
-              [clojure.java.io :as io]))
+  (:require [cognitect.aws.client.api :as aws]
+            ;; [covid-lambda.config :as cfg]
+            ))
 
-(defn put-data-dump [client config filename data]
-  (let [bucket    (->> config :s3 :bucket)
-        directory (->> config :s3 :upload-base-dir)
-        fullpath  (str bucket "/" directory)
-        resp      (with-open [dump-input-stream (io/input-stream (.getBytes data))]
-                    (aws/invoke client {:op      :PutObject
-                                        :request {:Key    filename
-                                                  :Body   dump-input-stream
-                                                  :Bucket fullpath}}))
-        meta      {:filename filename
-                   :filepath fullpath}]
-    (if-not (empty? resp)
-      (merge resp meta)
-      (merge {:error/code        401
-              :error/message     "Dumping data fail."
-              :error/s3-response resp}
-             meta))))
+(declare s3)
+
+(def s3 (aws/client {:api :s3}))
+
+(defn put-into-bucket [country mystring]
+  (aws/invoke s3 {:op :PutObject :request {:Bucket (str "covid.arifian.net/data/" country)
+                                           :Key "hello.json"
+                                           :Body (.getBytes mystring)}}))
+
+#_(put-into-bucket "indonesia" "HI")
