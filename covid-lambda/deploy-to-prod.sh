@@ -31,4 +31,4 @@ revert-staging-env() {
 	--environment Variables={ENV=staging}
 }
 
-build && update-code && set-prod-env && deploy-prod && revert-staging-env
+build && update-code && set-prod-env && deploy-prod && revert-staging-env && lein clean

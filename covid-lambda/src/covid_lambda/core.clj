@@ -52,7 +52,7 @@
                                                                   "now.json"
                                                                   (json/write-str data))))
                                      (str nil))
-      "run-task-now-data-province" (if-let [data (-> "https://covid19.mathdro.id/api/countries/indonesia"
+      "run-task-now-data-province" (if-let [data (-> "https://api.kawalcorona.com/indonesia/provinsi"
                                                      mh/get-data
                                                      :body)]
                                      (do (s3/copy-into-bucket "indonesia/live-province-archive"
