@@ -16,4 +16,5 @@ export const styles = {
   itemsCenter: { display: "flex", "align-items": "center" },
   textCenter: { "text-align": "center" },
   inlineFlex: { display: "inline-flex", },
+  textLeft: { "text-align": "left" },
 };

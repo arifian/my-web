@@ -5,7 +5,7 @@ const devConfig = {
 
 const prodConfig = {
   dev: false,
-  apiEndpoint: "https://covid.arifian.net",
+  apiEndpoint: "http://covid.arifian.net.s3-website-ap-southeast-1.amazonaws.com",
 };
 
-export const config = devConfig;
+export const config = prodConfig;

@@ -2,6 +2,12 @@ import {styles} from "../../styles";
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
+import clsx from "clsx";
+import Card from '@material-ui/core/Card';
+import CardContent from "@material-ui/core/CardContent";
+import { MyResponsiveBar } from "./bar";
+import Typography from "@material-ui/core/Typography";
+import { config } from "../../config";
 
 const _styles = (theme) => ({
   ...styles
@@ -9,10 +15,46 @@ const _styles = (theme) => ({
 
 class _TimeSeries extends Component {
 
-  render() {
+  _getData = () => {
+    const d = this.props.timeSeries?.data ?? [];
+    return d.map((v) => ({
+      confirmed: v?.Confirmed ?? 0,
+      deaths: v?.Deaths ?? 0,
+      recovered: v?.Recovered ?? 0,
+      active: v?.Active ?? 0,
+      date: (v?.Date ? new Date(v.Date).toDateString() : "-"),
+    }))
+  };
+
+  _renderRawData = () => {
+    if (config.dev) {
+      return (
+        <pre>
+        { JSON.stringify(this.props.timeSeries, null, 2) }
+      </pre>
+      )
+    }
+    return null;
+  };
+
+  _renderChart = () => {
+    const c = this.props.classes;
     return (
-      <div {...this.props}>
-        <h1>Zehahaha 1</h1>
+      <Card className={c.pOne}>
+        <CardContent style={{height: 500}}>
+          <MyResponsiveBar data={this._getData()} />
+        </CardContent>
+      </Card>
+    )
+  };
+
+  render() {
+    const c = this.props.classes;
+    return (
+      <div className={clsx(c.textLeft, c.mbOne)}>
+        <Typography component={"h2"} variant={"h5"}>Time Series</Typography>
+        { this._renderChart() }
+        { this._renderRawData() }
       </div>
     );
   }

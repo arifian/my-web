@@ -8,15 +8,16 @@ import clsx from "clsx";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import { Latest } from "./view/latest";
 import { Provinces } from "./view/provinces";
 import { TimeSeries } from "./view/time-series";
+import { config } from "./config";
 
 const _styles = (theme) => ({
   ...styles,
   debug: {
-    border: "1px solid red",
+    border: config?.dev ? "1px solid red" : 0,
   },
   w50d: {
     [theme.breakpoints.down("sm")]: {
@@ -41,19 +42,19 @@ const _styles = (theme) => ({
     [theme.breakpoints.up("lg")]: {
       width: 1200,
     },
-    topBox: {
-      display: "flex",
-      [theme.breakpoints.down("sm")]: {
-        "flex-direction": "column",
-      },
-      [theme.breakpoints.up("md")]: {
-        "flex-direction": "column",
-      },
-      [theme.breakpoints.up("lg")]: {
-        "flex-direction": "row",
-      },
-    }
   },
+  topBox: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      "flex-direction": "column",
+    },
+    [theme.breakpoints.up("md")]: {
+      "flex-direction": "column",
+    },
+    [theme.breakpoints.up("lg")]: {
+      "flex-direction": "row",
+    },
+  }
 });
 
 class App extends Component {
@@ -68,9 +69,9 @@ class App extends Component {
     return (
       <AppBar position="relative" className={c.mbOne}>
         <Toolbar>
-          <CameraIcon className={c.mrOne}/>
+          <TimelineIcon className={c.mrOne}/>
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Covid Arifian App
           </Typography>
         </Toolbar>
       </AppBar>
@@ -79,6 +80,7 @@ class App extends Component {
 
   render() {
     const c = this.props.classes;
+
     return (
       <div className="App">
         { this._appBar() }
