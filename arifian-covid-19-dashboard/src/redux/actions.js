@@ -1,5 +1,5 @@
 import { Action } from "./type";
-import { getLatestCovidData, getLatestCovidProvinceData, getLatestCovidTimeSeriesData } from "./ajax";
+import { fetchLatestCovidData, fetchLatestCovidProvinceData, fetchLatestCovidTimeSeriesData } from "./ajax";
 
 export const isSuccessStatus = (status) => {
   const s = parseInt(status);
@@ -74,7 +74,7 @@ export const getLatestCovidProvinceData = () => {
   return (dispatch) =>{
     return new Promise(async (resolve, _) => {
       dispatch(_getLatestCovidProvinceRequest());
-      const axr = await getLatestCovidProvinceData();
+      const axr = await fetchLatestCovidProvinceData();
       const status = axr?.status ?? 500;
 
       if (isSuccessStatus(status)) {
@@ -112,7 +112,7 @@ export const getLatestCovidTimeSeries = () => {
   return (dispatch) =>{
     return new Promise(async (resolve, _) => {
       dispatch(_getLatestCovidTimeSeriesRequest());
-      const axr = await getLatestCovidTimeSeriesData();
+      const axr = await fetchLatestCovidTimeSeriesData();
       const status = axr?.status ?? 500;
 
       if (isSuccessStatus(status)) {

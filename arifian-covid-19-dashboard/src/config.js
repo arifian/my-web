@@ -1,6 +1,6 @@
 const devConfig = {
   dev: true,
-  apiEndpoint: "https://covid.arifian.net",
+  apiEndpoint: "http://covid.arifian.net.s3-website-ap-southeast-1.amazonaws.com/",
 };
 
 const prodConfig = {

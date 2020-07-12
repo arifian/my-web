@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "../../config";
 
-export const getLatestCovidData = async () => {
+export const fetchLatestCovidData = async () => {
   try {
     return await axios.get(`${config.apiEndpoint}/data/indonesia/now.json`);
   } catch (e) {
@@ -9,7 +9,7 @@ export const getLatestCovidData = async () => {
   }
 };
 
-export const getLatestCovidProvinceData = async () => {
+export const fetchLatestCovidProvinceData = async () => {
   try {
     return await axios.get(`${config.apiEndpoint}/data/indonesia/now-province.json`);
   } catch (e) {
@@ -17,7 +17,7 @@ export const getLatestCovidProvinceData = async () => {
   }
 };
 
-export const getLatestCovidTimeSeriesData = async () => {
+export const fetchLatestCovidTimeSeriesData = async () => {
   try {
     return await axios.get(`${config.apiEndpoint}/data/indonesia/time-series.json`);
   } catch (e) {
