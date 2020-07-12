@@ -36,7 +36,7 @@ export const getLatestCovidData = () => {
   return (dispatch) =>{
     return new Promise(async (resolve, _) => {
       dispatch(_getLatestCovidRequest());
-      const axr = await getLatestCovidData();
+      const axr = await fetchLatestCovidData();
       const status = axr?.status ?? 500;
 
       if (isSuccessStatus(status)) {
