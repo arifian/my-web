@@ -4,7 +4,10 @@ import { fetchLatestCovidData, fetchLatestCovidProvinceData, fetchLatestCovidTim
 export const isSuccessStatus = (status) => {
   const s = parseInt(status);
   const number = !isNaN(s);
-  return (number >= 200 && number < 300);
+  if (number) {
+    return (s >= 200 && s < 300);
+  }
+  return false;
 };
 
 const createErrorFromAxr = (axr) => {
