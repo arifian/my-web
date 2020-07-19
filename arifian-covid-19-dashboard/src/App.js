@@ -21,6 +21,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { Switch, Route, withRouter } from "react-router-dom";
+import DeviceOrientation, { Orientation } from 'react-screen-orientation'
 
 const _styles = (theme) => ({
   ...styles,
@@ -111,6 +112,9 @@ class App extends Component {
     // this.props.getLatestCovidData();
     // this.props.getLatestCovidProvinceData();
     // this.props.getLatestCovidTimeSeries();
+    if (!window.navigator.xr && window.screen.orientation && window.screen.orientation.lock) {
+      window.screen.orientation.lock('landscape');
+    }
   }
 
   _appBar = () => {
