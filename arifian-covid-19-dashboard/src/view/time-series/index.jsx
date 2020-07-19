@@ -56,8 +56,7 @@ class _TimeSeries extends Component {
   render() {
     const c = this.props.classes;
     return (
-      <div className={clsx(c.textLeft, c.mbOne)}>
-        <Typography component={"h2"} variant={"h5"}>Time Series</Typography>
+      <div className={clsx(c.textLeft, c.mbOne)} style={{width: 1500}}>
         { this._renderChart() }
         { this._renderRawData() }
       </div>

@@ -91,7 +91,6 @@ class _Latest extends Component {
     const c = this.props.classes;
     return (
       <div className={clsx(c.textLeft)}>
-        <Typography component={"h2"} variant={"h5"}>Latest</Typography>
         { this._renderCard() }
         { this._renderRawData() }
       </div>

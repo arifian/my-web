@@ -112,9 +112,9 @@ class App extends Component {
     // this.props.getLatestCovidData();
     // this.props.getLatestCovidProvinceData();
     // this.props.getLatestCovidTimeSeries();
-    if (!window.navigator.xr && window.screen.orientation && window.screen.orientation.lock) {
-      window.screen.orientation.lock('landscape');
-    }
+    // if (!window.navigator.xr && window.screen.orientation && window.screen.orientation.lock) {
+    //   window.screen.orientation.lock('landscape');
+    // }
   }
 
   _appBar = () => {
@@ -140,13 +140,21 @@ class App extends Component {
         <div className={clsx(c.debug, c.container)}>
           <Switch>
             <Route exact path={"/"}>
+              <Typography component={"h2"} variant={"h5"}>Latest</Typography>
               <div className={clsx(c.debug, c.pOne, c.mb100)}><Latest/></div>
             </Route>
             <Route exact path={"/time-series"}>
-              <div className={clsx(c.debug, c.pOne, c.mb100)}><TimeSeries/></div>
+              <Typography component={"h2"} variant={"h5"}>Time Series</Typography>
+              <div className={clsx(c.debug, c.pOne, c.mb100)} style={{width: "100%", overflowX: "auto"}}
+              >
+                <TimeSeries/>
+              </div>
             </Route>
             <Route exact path={"/provinces"}>
-              <div className={clsx(c.debug, c.pOne, c.mb100)}><Provinces/></div>
+              <Typography component={"h2"} variant={"h5"}>Province</Typography>
+              <div className={clsx(c.debug, c.pOne, c.mb100)} style={{width: "100%", overflowX: "auto"}}>
+                <Provinces/>
+              </div>
             </Route>
           </Switch>
         </div>

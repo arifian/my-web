@@ -73,8 +73,7 @@ class _Provinces extends Component {
   render() {
     const c = this.props.classes;
     return (
-      <div className={clsx(c.textLeft)}>
-        <Typography component={"h2"} variant={"h5"}>Province</Typography>
+      <div className={clsx(c.textLeft)} style={{width: 1500}}>
         { this._renderCard() }
         { this._renderRawData() }
       </div>
