@@ -10,38 +10,31 @@ import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { config } from "../../config";
+import { MyResponsiveBar } from "./bar";
 
 const _styles = (theme) => ({
   ...styles
 });
 
+// Kasus_Meni: 1349
+// Kasus_Posi: 18033
+// Kasus_Semb: 8868
+// Kode_Provi: 35
+// Provinsi: "Jawa Timur"
+
 class _Provinces extends Component {
 
   _getData = () => {
-    const d = this.props.province.data;
-    const confirmed = d?.confirmed?.value ?? 0;
-    const recovered = d?.recovered?.value ?? 0;
-    const deaths = d?.deaths?.value ?? 0;
-    return [
-      {
-        id: "recovered",
-        label: "Recovered",
-        value: recovered,
-        color: "hsl(127,74%,35%)",
-      },
-      {
-        id: "deaths",
-        label: "Deaths",
-        value: deaths,
-        color: "#8f2421",
-      },
-      {
-        id: "confirmed",
-        label: "Confirmed",
-        value: confirmed,
-        color: "hsl(37,85%,46%)"
-      },
-    ]
+    const d = this.props.province?.data ?? [];
+    return d?.map((el) => {
+      const e = el["attributes"] || {};
+      return {
+        "Provinsi": e["Provinsi"] || 0,
+        'Kasus Meninggal': e["Kasus_Meni"] || 0,
+        'Kasus Positif': e["Kasus_Posi"] || 0,
+        'Kasus Sembuh': e["Kasus_Semb"] || 0,
+      }
+    })
   };
 
   _renderRawData = () => {
@@ -62,11 +55,10 @@ class _Provinces extends Component {
 
     return (
       <Card className={c.pOne}>
-        <CardContent style={{height: 500}}>
-          <MyResponsivePie data={this._getData()}/>
+        <CardContent style={{height: 1024}}>
+          <MyResponsiveBar data={this._getData()}/>
         </CardContent>
         <CardActions>
-          <Typography variant="body2" component="p">Last Update: </Typography>
           <Button size="small">{ lastUpdate?.toLocaleString() ?? "-" }</Button>
         </CardActions>
       </Card>

@@ -85,11 +85,9 @@ class App extends Component {
       <div className="App">
         { this._appBar() }
         <div className={clsx(c.debug, c.container)}>
-          <div className={clsx(c.debug, c.topBox)}>
-            <div className={clsx(c.debug, c.w50d, c.pOne)}><Latest/></div>
-            <div className={clsx(c.debug, c.w50d, c.pOne)}><Provinces/></div>
-          </div>
+          <div className={clsx(c.debug, c.pOne)}><Latest/></div>
           <div className={clsx(c.debug, c.pOne)}><TimeSeries/></div>
+          <div className={clsx(c.debug, c.pOne)}><Provinces/></div>
         </div>
       </div>
     );
