@@ -27,7 +27,7 @@ class _TimeSeries extends Component {
       deaths: v?.Deaths ?? 0,
       recovered: v?.Recovered ?? 0,
       active: v?.Active ?? 0,
-      date: (v?.Date ? new Date(v.Date).toDateString() : "-"),
+      date: (v?.Date ? new Date(v.Date).toLocaleDateString() : "-"),
     }))
   };
 
@@ -56,7 +56,7 @@ class _TimeSeries extends Component {
   render() {
     const c = this.props.classes;
     return (
-      <div className={clsx(c.textLeft, c.mbOne)} style={{width: 1500}}>
+      <div className={clsx(c.textLeft, c.mbOne)} style={{width: 2000}}>
         { this._renderChart() }
         { this._renderRawData() }
       </div>

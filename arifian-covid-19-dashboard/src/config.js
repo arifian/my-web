@@ -8,4 +8,4 @@ const prodConfig = {
   apiEndpoint: "https://covid.arifian.net",
 };
 
-export const config = prodConfig;
+export const config = prodConfigß;

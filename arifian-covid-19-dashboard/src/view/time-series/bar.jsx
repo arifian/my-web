@@ -11,8 +11,8 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
     data={data}
     keys={[ 'confirmed', 'deaths', 'recovered', 'active' ]}
     indexBy="date"
-    margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-    padding={0.3}
+    margin={{ top: 50, right: 130, bottom: 100, left: 60 }}
+    padding={0.1}
     colors={{ scheme: 'nivo' }}
     defs={[
       {
@@ -51,7 +51,14 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
     borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
     axisTop={null}
     axisRight={null}
-    axisBottom={null}
+    axisBottom={{
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 90,
+      legend: '',
+      legendPosition: 'middle',
+      legendOffset: 60
+    }}
     axisLeft={{
       tickSize: 5,
       tickPadding: 5,
