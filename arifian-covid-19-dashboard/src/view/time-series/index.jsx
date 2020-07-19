@@ -8,12 +8,17 @@ import CardContent from "@material-ui/core/CardContent";
 import { MyResponsiveBar } from "./bar";
 import Typography from "@material-ui/core/Typography";
 import { config } from "../../config";
+import {getLatestCovidData, getLatestCovidProvinceData, getLatestCovidTimeSeries} from "../../redux/actions";
 
 const _styles = (theme) => ({
   ...styles
 });
 
 class _TimeSeries extends Component {
+
+  componentDidMount() {
+    this.props.getLatestCovidTimeSeries();
+  }
 
   _getData = () => {
     const d = this.props.timeSeries?.data ?? [];
@@ -66,7 +71,9 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-
+  getLatestCovidData: () => dispatch(getLatestCovidData()),
+  getLatestCovidProvinceData: () => dispatch(getLatestCovidProvinceData()),
+  getLatestCovidTimeSeries: () => dispatch(getLatestCovidTimeSeries()),
 });
 
 const _comp1 = connect(mapStateToProps, mapDispatchToProps)(_TimeSeries);

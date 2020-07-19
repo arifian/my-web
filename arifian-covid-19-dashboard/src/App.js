@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { getLatestCovidData, getLatestCovidProvinceData, getLatestCovidTimeSeries } from "./redux/actions";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 import clsx from "clsx";
 import AppBar from '@material-ui/core/AppBar';
@@ -13,9 +13,20 @@ import { Latest } from "./view/latest";
 import { Provinces } from "./view/provinces";
 import { TimeSeries } from "./view/time-series";
 import { config } from "./config";
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { Switch, Route, withRouter } from "react-router-dom";
 
 const _styles = (theme) => ({
   ...styles,
+  mb100: {
+    marginBottom: 100,
+  },
   debug: {
     border: config?.dev ? "1px solid red" : 0,
   },
@@ -57,11 +68,49 @@ const _styles = (theme) => ({
   }
 });
 
+const useStyles = makeStyles({
+  ...styles,
+  fixed: {
+    bottom: 0,
+    width: "100%",
+    position: "fixed",
+  }
+});
+
+const _MyBottomNavigation = (props) => {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  return (
+    <BottomNavigation
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      showLabels
+      className={classes.fixed}
+    >
+      <BottomNavigationAction
+        onClick={() => props.history.push("/")}
+        label="Latest" icon={<RestoreIcon />} />
+      <BottomNavigationAction
+        onClick={() => props.history.push("/time-series")}
+        label="Time Series" icon={<TimelineIcon />} />
+      <BottomNavigationAction
+        onClick={() => props.history.push("/provinces")}
+        label="Provinces" icon={<LocationOnIcon />} />
+    </BottomNavigation>
+  );
+};
+
+const MyBottomNavigation = withRouter(_MyBottomNavigation);
+
 class App extends Component {
+
   componentDidMount() {
-    this.props.getLatestCovidData();
-    this.props.getLatestCovidProvinceData();
-    this.props.getLatestCovidTimeSeries();
+    // this.props.getLatestCovidData();
+    // this.props.getLatestCovidProvinceData();
+    // this.props.getLatestCovidTimeSeries();
   }
 
   _appBar = () => {
@@ -75,20 +124,29 @@ class App extends Component {
           </Typography>
         </Toolbar>
       </AppBar>
-    )
+    );
   };
 
   render() {
     const c = this.props.classes;
 
     return (
-      <div className="App">
+      <div className="App" style={{position: "relative"}}>
         { this._appBar() }
         <div className={clsx(c.debug, c.container)}>
-          <div className={clsx(c.debug, c.pOne)}><Latest/></div>
-          <div className={clsx(c.debug, c.pOne)}><TimeSeries/></div>
-          <div className={clsx(c.debug, c.pOne)}><Provinces/></div>
+          <Switch>
+            <Route exact path={"/"}>
+              <div className={clsx(c.debug, c.pOne, c.mb100)}><Latest/></div>
+            </Route>
+            <Route exact path={"/time-series"}>
+              <div className={clsx(c.debug, c.pOne, c.mb100)}><TimeSeries/></div>
+            </Route>
+            <Route exact path={"/provinces"}>
+              <div className={clsx(c.debug, c.pOne, c.mb100)}><Provinces/></div>
+            </Route>
+          </Switch>
         </div>
+        <MyBottomNavigation/>
       </div>
     );
   }

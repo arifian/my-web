@@ -11,12 +11,17 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { MyResponsivePie } from "../components/pie";
 import { config } from "../../config";
+import {getLatestCovidData, getLatestCovidProvinceData, getLatestCovidTimeSeries} from "../../redux/actions";
 
 const _styles = (theme) => ({
   ...styles
 });
 
 class _Latest extends Component {
+
+  componentDidMount() {
+    this.props.getLatestCovidData();
+  }
 
   _getData = () => {
     const d = this.props.latestCovid?.data;
@@ -100,8 +105,11 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-
+  getLatestCovidData: () => dispatch(getLatestCovidData()),
+  getLatestCovidProvinceData: () => dispatch(getLatestCovidProvinceData()),
+  getLatestCovidTimeSeries: () => dispatch(getLatestCovidTimeSeries()),
 });
+
 
 const _comp1 = connect(mapStateToProps, mapDispatchToProps)(_Latest);
 const _comp2 = withStyles(_styles)(_comp1);

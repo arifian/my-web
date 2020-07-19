@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { config } from "../../config";
 import { MyResponsiveBar } from "./bar";
+import {getLatestCovidData, getLatestCovidProvinceData, getLatestCovidTimeSeries} from "../../redux/actions";
 
 const _styles = (theme) => ({
   ...styles
@@ -23,6 +24,10 @@ const _styles = (theme) => ({
 // Provinsi: "Jawa Timur"
 
 class _Provinces extends Component {
+
+  componentDidMount() {
+    this.props.getLatestCovidProvinceData();
+  }
 
   _getData = () => {
     const d = this.props.province?.data ?? [];
@@ -83,7 +88,9 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-
+  getLatestCovidData: () => dispatch(getLatestCovidData()),
+  getLatestCovidProvinceData: () => dispatch(getLatestCovidProvinceData()),
+  getLatestCovidTimeSeries: () => dispatch(getLatestCovidTimeSeries()),
 });
 
 const _comp1 = connect(mapStateToProps, mapDispatchToProps)(_Provinces);
