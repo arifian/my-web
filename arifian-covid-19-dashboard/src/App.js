@@ -120,7 +120,7 @@ class App extends Component {
         <Toolbar>
           <TimelineIcon className={c.mrOne}/>
           <Typography variant="h6" color="inherit" noWrap>
-            Covid Arifian App
+            Covid 19 Status In Indonesia - Work in progress...
           </Typography>
         </Toolbar>
       </AppBar>
