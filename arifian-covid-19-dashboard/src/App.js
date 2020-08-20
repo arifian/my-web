@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import { Latest } from "./view/latest";
+import { About } from "./view/about";
 import { Provinces } from "./view/provinces";
 import { TimeSeries } from "./view/time-series";
 import { config } from "./config";
@@ -79,29 +80,32 @@ const useStyles = makeStyles({
 });
 
 const _MyBottomNavigation = (props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
 
-  return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.fixed}
-    >
-      <BottomNavigationAction
+    return (
+	    <BottomNavigation
+	value={value}
+	onChange={(event, newValue) => {
+            setValue(newValue);
+	}}
+	showLabels
+	className={classes.fixed}
+	    >
+	    <BottomNavigationAction
         onClick={() => props.history.push("/")}
         label="Latest" icon={<RestoreIcon />} />
-      <BottomNavigationAction
+	    <BottomNavigationAction
         onClick={() => props.history.push("/time-series")}
         label="Time Series" icon={<TimelineIcon />} />
-      <BottomNavigationAction
+	    <BottomNavigationAction
         onClick={() => props.history.push("/provinces")}
-        label="Provinces" icon={<LocationOnIcon />} />
-    </BottomNavigation>
-  );
+	label="Provinces" icon={<LocationOnIcon />} />
+	    <BottomNavigationAction
+        onClick={() => props.history.push("/about")}
+        label="About" icon={<FavoriteIcon />} />
+	    </BottomNavigation>
+    );
 };
 
 const MyBottomNavigation = withRouter(_MyBottomNavigation);
@@ -124,7 +128,7 @@ class App extends Component {
         <Toolbar>
           <TimelineIcon className={c.mrOne}/>
           <Typography variant="h6" color="inherit" noWrap>
-            Covid 19 Status In Indonesia - Work in progress...
+            Covid 19 Status In Indonesia
           </Typography>
         </Toolbar>
       </AppBar>
@@ -154,6 +158,12 @@ class App extends Component {
               <Typography component={"h2"} variant={"h5"}>Province</Typography>
               <div className={clsx(c.debug, c.pOne, c.mb100)} style={{width: "100%", overflowX: "auto"}}>
                 <Provinces/>
+              </div>
+            </Route>
+	    <Route exact path={"/about"}>
+              <Typography component={"h2"} variant={"h5"}>About</Typography>
+            <div className={clsx(c.debug, c.pOne, c.mb100)} style={{width: "100%", overflowX: "auto"}}>
+	    <About/>
               </div>
             </Route>
           </Switch>
